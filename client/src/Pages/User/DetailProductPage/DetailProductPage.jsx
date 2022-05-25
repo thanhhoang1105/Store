@@ -142,40 +142,6 @@ const DetailProductPage = () => {
                             </button>
                             <div class="product-detail-description-content">
                                 <p>{product.description}</p>
-                                {/* <img
-                                    src="./images/JBL_Quantum_400_Product Image_Hero 02.png"
-                                    alt=""
-                                />
-                                <p>
-                                    Lorem ipsum dolor sit amet consectetur
-                                    adipisicing elit. Nobis accusantium officia,
-                                    quae fuga in exercitationem aliquam labore
-                                    ex doloribus repellendus beatae facilis
-                                    ipsam. Veritatis vero obcaecati iste atque
-                                    aspernatur ducimus. Lorem ipsum dolor sit,
-                                    amet consectetur adipisicing elit. Repellat
-                                    quam praesentium id sit amet magnam ad,
-                                    dolorum, cumque iste optio itaque expedita
-                                    eius similique, ab adipisci dicta. Quod,
-                                    quibusdam quas. Lorem ipsum dolor sit amet
-                                    consectetur adipisicing elit. Odit, in
-                                    corrupti ipsam sint error possimus commodi
-                                    incidunt suscipit sit voluptatum quibusdam
-                                    enim eligendi animi deserunt recusandae
-                                    earum natus voluptas blanditiis?
-                                </p>
-                                <img
-                                    src="./images/kisspng-beats-electronics-headphones-apple-beats-studio-red-headphones.png"
-                                    alt=""
-                                />
-                                <p>
-                                    Lorem ipsum dolor sit amet consectetur
-                                    adipisicing elit. Modi ullam quam fugit
-                                    veniam ipsum recusandae incidunt, ex
-                                    ratione, magnam labore ad tenetur officia!
-                                    In, totam. Molestias sapiente deserunt animi
-                                    porro?
-                                </p> */}
                             </div>
                         </div>
                     </div>
@@ -212,31 +178,29 @@ const DetailProductPage = () => {
                             <div class="box">
                                 <ul class="pagination">
                                     <li>
-                                        <a href="#">
+                                        <Link to="">
                                             <i class="bx bxs-chevron-left"></i>
-                                        </a>
+                                        </Link>
                                     </li>
                                     <li>
-                                        <a href="#" class="active">
-                                            1
-                                        </a>
+                                        <Link to="">1</Link>
                                     </li>
                                     <li>
-                                        <a href="#">2</a>
+                                        <Link to="">2</Link>
                                     </li>
                                     <li>
-                                        <a href="#">3</a>
+                                        <Link to="">3</Link>
                                     </li>
                                     <li>
-                                        <a href="#">4</a>
+                                        <Link to="">4</Link>
                                     </li>
                                     <li>
-                                        <a href="#">5</a>
+                                        <Link to="">5</Link>
                                     </li>
                                     <li>
-                                        <a href="#">
+                                        <Link to="">
                                             <i class="bx bxs-chevron-right"></i>
-                                        </a>
+                                        </Link>
                                     </li>
                                 </ul>
                             </div>
