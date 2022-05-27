@@ -4,27 +4,31 @@ const catchAsyncErrors = require('../middleware/catchAsyncErrors')
 const sendToken = require('../utils/jwtToken.js')
 const sendMail = require('../utils/sendMail.js')
 const crypto = require('crypto')
+const cloudinary = require('cloudinary')
 
 //Register User
 exports.createUser = catchAsyncErrors(async (req, res, next) => {
-    const { name, email, password } = req.body
+    const { name, email, password, avatar } = req.body
+
+    if (avatar) {
+    }
+    const myCloud = await cloudinary.v2.uploader.upload(avatar, {
+        folder: 'avatars',
+        width: 150,
+        crop: 'scale'
+    })
 
     const user = await User.create({
         name,
         email,
         password,
         avatar: {
-            public_id: 'https://test.com/image.jpg',
-            url: 'https://test.com/image.jpg'
+            public_id: myCloud.public_id,
+            url: myCloud.secure_url
         }
     })
 
-    const token = user.getJwtToken()
-
-    res.status(201).json({
-        success: true,
-        token
-    })
+    sendToken(user, 200, res)
 })
 
 //Login User
@@ -47,7 +51,7 @@ exports.loginUser = catchAsyncErrors(async (req, res, next) => {
         return next(new ErrorHandler('Invalid email or password', 401))
     }
 
-    const token = user.getJwtToken()
+    // const token = user.getJwtToken()
 
     // res.status(201).json({
     //     success: true,
@@ -163,7 +167,7 @@ exports.getUserDetails = catchAsyncErrors(async (req, res, next) => {
 
     res.status(200).json({
         success: true,
-        data: user
+        user
     })
 })
 
@@ -198,22 +202,75 @@ exports.updateUserPassword = catchAsyncErrors(async (req, res, next) => {
 })
 
 //Update User Profile
+// exports.updateUserProfile = catchAsyncErrors(async (req, res, next) => {
+//     // const { name, email, address, phoneNo, image } = req.body
+
+//     // try {
+//     //     const user = await User.findById(req.user.id)
+
+//     //     if (!user) {
+//     //         return next(new ErrorHandler('User not found', 404))
+//     //     }
+
+//     //     if (image) {
+//     //         const myCloud = await cloudinary.v2.uploader.upload(image, {
+//     //             folder: 'avatars',
+//     //             width: 150,
+//     //             crop: 'scale'
+//     //         })
+
+//     //         user.avatar.public_id = myCloud.public_id
+//     //         user.avatar.url = myCloud.secure_url
+//     //     }
+
+//     //     user.name = name
+//     //     user.email = email
+//     //     user.address = address
+//     //     user.phoneNo = phoneNo
+
+//     //     await user.save()
+
+//     //     console.log(image)
+//     //     console.log('name', name)
+
+//     //     sendToken(user, 200, res)
+//     // } catch (error) {
+//     //     return next(new ErrorHandler(error.message, 500))
+//     // }
+// })
+
+// update User Profile
 exports.updateUserProfile = catchAsyncErrors(async (req, res, next) => {
-    const newUserData = {
-        name: req.body.name,
-        email: req.body.email
+    const { name, email, address, phoneNo, image } = req.body
+    try {
+        const user = await User.findById(req.user.id)
+
+        if (!user) {
+            return next(new ErrorHandler('User not found', 404))
+        }
+
+        if (image) {
+            const myCloud = await cloudinary.v2.uploader.upload(image, {
+                folder: 'avatars',
+                width: 150,
+                crop: 'scale'
+            })
+
+            user.avatar.public_id = myCloud.public_id
+            user.avatar.url = myCloud.secure_url
+        }
+
+        user.name = name
+        user.email = email
+        user.address = address
+        user.phoneNo = phoneNo
+
+        await user.save()
+
+        sendToken(user, 200, res)
+    } catch (error) {
+        return next(new ErrorHandler(error.message, 500))
     }
-
-    const user = await User.findByIdAndUpdate(req.user.id, newUserData, {
-        new: true,
-        runValidators: true,
-        useFindingAndModifying: false
-    })
-
-    res.status(200).json({
-        success: true,
-        user
-    })
 })
 
 //Get All Users --> Admin

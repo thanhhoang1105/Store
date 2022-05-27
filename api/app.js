@@ -11,12 +11,15 @@ app.use(cookieParser())
 const product = require('./routes/ProductRoute')
 const user = require('./routes/UserRoute')
 const order = require('./routes/OrderRoute')
+const category = require('./routes/CategoryRoute')
 
 app.use('/api/v1', product)
 
 app.use('/api/v1', user)
 
 app.use('/api/v1', order)
+
+app.use('/api/v1', category)
 
 app.use(ErrorHandler)
 

@@ -37,6 +37,14 @@ const userSchema = new mongoose.Schema({
         type: String,
         default: 'user'
     },
+    address: {
+        type: String,
+        default: 'Chưa Nhập'
+    },
+    phoneNo: {
+        type: String,
+        default: 'Chưa Nhập'
+    },
     createdAt: {
         type: Date,
         default: Date.now()

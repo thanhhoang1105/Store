@@ -3,61 +3,79 @@ import thunk from 'redux-thunk'
 import { composeWithDevTools } from 'redux-devtools-extension'
 import {
     productsReducer,
-    productDetailsReducer
+    productDetailsReducer,
+    productReviewsReducer,
+    newReviewReducer,
+    newProductReducer,
+    deleteReviewReducer,
+    deleteProductReducer
 } from './Reducers/ProductReducer'
-// import {
-//     allUsersReducer,
-//     forgotPasswordReducer,
-//     profileReducer,
-//     userDetailsReducer,
-//     userReducer
-// } from './reducers/userReducer'
-// import { cartReducer } from './reducers/CartReducer'
-// import { favouriteReducer } from './reducers/FavouriteReducer'
-// import {
-//     allOrdersReducer,
-//     myOrdersReducer,
-//     newOrderReducer,
-//     orderDetailsReducer,
-//     orderReducer
-// } from './reducers/OrderReducer'
+import {
+    allUsersReducer,
+    forgotPasswordReducer,
+    profileReducer,
+    userDetailsReducer,
+    userReducer
+} from './Reducers/UserReducer'
+import { cartReducer } from './Reducers/CartReducer'
+import { favouriteReducer } from './Reducers/FavouriteReducer'
+import {
+    allOrdersReducer,
+    myOrdersReducer,
+    newOrderReducer,
+    orderDetailsReducer,
+    orderReducer
+} from './Reducers/OrderReducer'
+import {
+    categoriesReducer,
+    newCategoryReducer,
+    updateCategoryReducer,
+    deleteCategoryReducer
+} from './Reducers/CategoryReducer'
 
 const reducer = combineReducers({
     products: productsReducer,
-    productDetails: productDetailsReducer
-    // user: userReducer,
-    // profile: profileReducer,
-    // cart: cartReducer,
-    // favourite: favouriteReducer,
-    // order: newOrderReducer,
-    // myOrder: myOrdersReducer,
-    // myOrderDetails: orderDetailsReducer,
-    // newReview: newReviewReducer,
-    // createProduct: newProductReducer,
-    // deleteProduct: deleteProductReducer,
-    // AllOrders: allOrdersReducer,
-    // deleteOrder: orderReducer,
-    // allUsers: allUsersReducer,
-    // userDetails: userDetailsReducer,
-    // deleteReview: deleteReviewReducer,
-    // productReviews: productReviewsReducer,
-    // forgotPassword: forgotPasswordReducer
+    productDetails: productDetailsReducer,
+    user: userReducer,
+    profile: profileReducer,
+    categories: categoriesReducer,
+    cart: cartReducer,
+    favourite: favouriteReducer,
+    order: newOrderReducer,
+    myOrder: myOrdersReducer,
+    myOrderDetails: orderDetailsReducer,
+    newReview: newReviewReducer,
+    createProduct: newProductReducer,
+    deleteProduct: deleteProductReducer,
+    createCategory: newCategoryReducer,
+    updateCategory: updateCategoryReducer,
+    deleteCategory: deleteCategoryReducer,
+    AllOrders: allOrdersReducer,
+    deleteOrder: orderReducer,
+    allUsers: allUsersReducer,
+    userDetails: userDetailsReducer,
+    deleteReview: deleteReviewReducer,
+    productReviews: productReviewsReducer,
+    forgotPassword: forgotPasswordReducer
 })
 
 let initialState = {
-    // cart: {
-    //     cartItems: localStorage.getItem('cartItems')
-    //         ? JSON.parse(localStorage.getItem('cartItems'))
-    //         : [],
-    //     shippingInfo: localStorage.getItem('shippingInfo')
-    //         ? JSON.parse(localStorage.getItem('shippingInfo'))
-    //         : {}
-    // },
-    // favourite: {
-    //     favouriteItems: localStorage.getItem('favouriteItems')
-    //         ? JSON.parse(localStorage.getItem('favouriteItems'))
-    //         : []
-    // }
+    // userInfo: localStorage.getItem('userInfo')
+    //     ? JSON.parse(localStorage.getItem('userInfo'))
+    //     : [],
+    cart: {
+        cartItems: localStorage.getItem('cartItems')
+            ? JSON.parse(localStorage.getItem('cartItems'))
+            : [],
+        shippingInfo: localStorage.getItem('shippingInfo')
+            ? JSON.parse(localStorage.getItem('shippingInfo'))
+            : {}
+    },
+    favourite: {
+        favouriteItems: localStorage.getItem('favouriteItems')
+            ? JSON.parse(localStorage.getItem('favouriteItems'))
+            : []
+    }
 }
 
 const middleWare = [thunk]

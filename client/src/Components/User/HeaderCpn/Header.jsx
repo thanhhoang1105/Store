@@ -1,14 +1,30 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
+import { useDispatch, useSelector } from 'react-redux'
+import { message } from 'antd'
+
+import { logout } from '../../../Redux/Actions/UserAction'
 
 const Header = () => {
+    const dispatch = useDispatch()
+
+    const { user } = useSelector(state => state.user)
+    // const { loading, error, user } = user
+
+    const handleLogout = () => {
+        dispatch(logout())
+        message.success('Logout Successfully')
+    }
+
+    // console.log('user', user?.name)
+
     return (
         <div classNameName="header">
             <header>
                 {/* mobile menu */}
                 <div className="mobile-menu bg-second">
                     <Link to="/" className="mb-logo">
-                        ATShop
+                        NTShop
                     </Link>
                     <span className="mb-menu-toggle" id="mb-menu-toggle">
                         <i className="bx bx-menu"></i>
@@ -42,12 +58,6 @@ const Header = () => {
                                         <li>
                                             <Link to="/">VND</Link>
                                         </li>
-                                        <li>
-                                            <Link to="/">JPY</Link>
-                                        </li>
-                                        <li>
-                                            <Link to="/">EUR</Link>
-                                        </li>
                                     </ul>
                                 </li>
                                 <li className="dropdown">
@@ -56,15 +66,6 @@ const Header = () => {
                                     <ul className="dropdown-content">
                                         <li>
                                             <Link to="/">VIETNAMESE</Link>
-                                        </li>
-                                        <li>
-                                            <Link to="/">JAPANESE</Link>
-                                        </li>
-                                        <li>
-                                            <Link to="/">FRENCH</Link>
-                                        </li>
-                                        <li>
-                                            <Link to="/">SPANISH</Link>
                                         </li>
                                     </ul>
                                 </li>
@@ -79,7 +80,7 @@ const Header = () => {
                     <div className="bg-main">
                         <div className="mid-header container">
                             <Link to="/" className="logo">
-                                ATShop
+                                NTShop
                             </Link>
                             <div className="search">
                                 <input
@@ -92,12 +93,7 @@ const Header = () => {
                             <ul className="user-menu">
                                 <li>
                                     <Link to="/">
-                                        <i className="bx bx-bell"></i>
-                                    </Link>
-                                </li>
-                                <li>
-                                    <Link to="/">
-                                        <i className="bx bx-user-circle"></i>
+                                        <i className="bx bx-heart"></i>
                                     </Link>
                                 </li>
                                 <li>
@@ -105,6 +101,28 @@ const Header = () => {
                                         <i className="bx bx-cart"></i>
                                     </Link>
                                 </li>
+                                {user ? (
+                                    <>
+                                        <li>
+                                            <Link to="/profile">
+                                                <i className="bx bx-user-circle"></i>
+                                            </Link>
+                                        </li>
+                                        <li>
+                                            <Link to="/" onClick={handleLogout}>
+                                                <i className="bx bx-log-in"></i>
+                                            </Link>
+                                        </li>
+                                    </>
+                                ) : (
+                                    <>
+                                        <li>
+                                            <Link to="/auth">
+                                                <i className="bx bx-user-circle"></i>
+                                            </Link>
+                                        </li>
+                                    </>
+                                )}
                             </ul>
                         </div>
                     </div>
@@ -115,6 +133,9 @@ const Header = () => {
                             <ul className="main-menu">
                                 <li>
                                     <Link to="/">home</Link>
+                                </li>
+                                <li>
+                                    <Link to="/products">products</Link>
                                 </li>
                                 {/* mega menu  */}
                                 <li className="mega-dropdown">

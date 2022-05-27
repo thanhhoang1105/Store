@@ -1,6 +1,8 @@
-import React, { useEffect } from 'react'
+import React, { useEffect, useState } from 'react'
 import { Link, useParams } from 'react-router-dom'
 import { useDispatch, useSelector } from 'react-redux'
+import { Rate } from 'antd'
+import { ToastContainer, toast } from 'react-toastify'
 
 import {
     getProductDetails,
@@ -8,7 +10,6 @@ import {
 } from '../../../Redux/Actions/ProductAction'
 
 const DetailProductPage = () => {
-    window.scrollTo({ top: 0 })
     const dispatch = useDispatch()
     const { id } = useParams()
     const { product, error, loading } = useSelector(
@@ -23,7 +24,24 @@ const DetailProductPage = () => {
         dispatch(getProductDetails(id))
     }, [dispatch, error, id])
 
+    // Increase quantity
+    const [quantity, setQuantity] = useState(1)
+
+    const increaseQuantity = () => {
+        if (product.Stock <= quantity)
+            return toast.error('Product stock limited')
+        const qty = quantity + 1
+        setQuantity(qty)
+    }
+
+    const decreaseQuantity = () => {
+        if (1 >= quantity) return
+        const qty = quantity - 1
+        setQuantity(qty)
+    }
+
     console.log('productDetails', product)
+    // console.log('productName', product.name)
     return (
         <div className="detail-product-page">
             <div class="bg-main">
@@ -83,20 +101,24 @@ const DetailProductPage = () => {
                                     <span class="product-info-detail-title">
                                         Brand:
                                     </span>
-                                    <Link to="">{product.category}</Link>
+                                    <Link
+                                        to=""
+                                        class="product-info-detail-category"
+                                    >
+                                        {product.category}
+                                    </Link>
                                 </div>
                                 <div class="product-info-detail">
                                     <span class="product-info-detail-title">
                                         Rated:
                                     </span>
-                                    <span class="rating">
-                                        {product.ratings}
-                                        <i class="bx bxs-star"></i>
-                                        <i class="bx bxs-star"></i>
-                                        <i class="bx bxs-star"></i>
-                                        <i class="bx bxs-star"></i>
-                                        <i class="bx bxs-star"></i>
-                                    </span>
+                                    <Rate
+                                        allowHalf
+                                        disabled
+                                        defaultValue={product.ratings}
+                                        style={{ padding: '0 10px' }}
+                                    />
+                                    ({product.numOfReviews} Reviews)
                                 </div>
                                 <p class="product-description">
                                     {product.description}
@@ -105,13 +127,24 @@ const DetailProductPage = () => {
                                     {product.price}
                                 </div>
                                 <div class="product-quantity-wrapper">
-                                    <span class="product-quantity-btn">
-                                        <i class="bx bx-minus"></i>
-                                    </span>
-                                    <span class="product-quantity">1</span>
-                                    <span class="product-quantity-btn">
-                                        <i class="bx bx-plus"></i>
-                                    </span>
+                                    <button
+                                        className="product-quantity-btn"
+                                        onClick={decreaseQuantity}
+                                    >
+                                        -
+                                    </button>
+                                    <input
+                                        type="number"
+                                        readOnly
+                                        value={quantity}
+                                        className="product-quantity-input"
+                                    />
+                                    <button
+                                        className="product-quantity-btn"
+                                        onClick={increaseQuantity}
+                                    >
+                                        +
+                                    </button>
                                 </div>
                                 <div
                                     // class="product-info-btn"
@@ -160,12 +193,12 @@ const DetailProductPage = () => {
                                                     {review.name}
                                                 </span>
                                                 <span class="rating">
-                                                    {review.rating}
-                                                    <i class="bx bxs-star"></i>
-                                                    <i class="bx bxs-star"></i>
-                                                    <i class="bx bxs-star"></i>
-                                                    <i class="bx bxs-star"></i>
-                                                    <i class="bx bxs-star"></i>
+                                                    <Rate
+                                                        disabled
+                                                        defaultValue={
+                                                            review.rating
+                                                        }
+                                                    />
                                                 </span>
                                             </div>
                                         </div>

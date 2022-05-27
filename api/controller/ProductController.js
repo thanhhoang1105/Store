@@ -17,9 +17,9 @@ exports.getAllProducts = async (req, res) => {
     const products = await feature.query
 
     res.status(200).json({
-        // success: true,
-        products
-        // resultPerPage
+        success: true,
+        products,
+        resultPerPage
     })
 }
 
