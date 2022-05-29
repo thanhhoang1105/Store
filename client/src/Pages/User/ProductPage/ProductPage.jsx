@@ -4,8 +4,7 @@ import { useDispatch, useSelector } from 'react-redux'
 import { message } from 'antd'
 
 import PrdCpn from '../../../Components/User/ProductCpn/PrdCpn'
-import { clearErrors } from '../../../Redux/Actions/ProductAction'
-import { getProduct } from '../../../Redux/Actions/ProductAction'
+import { clearErrors, getProduct } from '../../../Redux/Actions/ProductAction'
 
 const ProductPage = () => {
     window.scrollTo({ top: 0 })
@@ -14,40 +13,55 @@ const ProductPage = () => {
         state => state.categories
     )
 
-    const { products, productsCount, resultPerPage } = useSelector(
+    const { products, totalPages, productsCount, resultPerPage } = useSelector(
         state => state.products
     )
 
     const [currentPage, setCurrentPage] = useState(1)
-    // const [category, setCategory] = useState('')
+    const [category, setCategory] = useState('')
 
     // const keyword = match.params.keyword
 
-    const setCurrentPageNo = e => {
-        setCurrentPage(e)
+    // const setCurrentPageNo = e => {
+    //     setCurrentPage(e)
+    // }
+
+    useEffect(() => {
+        if (error) {
+            message.error(error)
+            dispatch(clearErrors())
+        }
+        dispatch(getProduct(category, currentPage))
+    }, [dispatch, currentPage, category, error])
+
+    const decreaseNavigator = () => {
+        if (currentPage > 1) {
+            setCurrentPage(currentPage - 1)
+        }
     }
 
-    // useEffect(() => {
-    //     if (error) {
-    //         message.error(error)
-    //         dispatch(clearErrors())
-    //     }
-    //     // dispatch(getProduct(keyword, currentPage, category))
-    // }, [dispatch, keyword, currentPage, category, error])
+    const increaseNavigator = () => {
+        if (currentPage < totalPages) {
+            setCurrentPage(currentPage + 1)
+        }
+    }
 
-    // console.log('category', category)
-    console.log('categories', categories)
+    // console.log('products', products)
+    // console.log('totalPages', totalPagesNavigator)
+    // console.log('currentPage', currentPage)
+    console.log('category', category)
+    // console.log('categories', categories)
 
     return (
         <div className="bg-main">
             <div className="container-1">
                 <div className="box">
                     <div className="breadcumb">
-                        <Link to="">home</Link>
+                        <Link to="/">home</Link>
                         <span>
                             <i className="bx bxs-chevrons-right"></i>
                         </span>
-                        <Link to="">all products</Link>
+                        <Link to="/products">all products</Link>
                     </div>
                 </div>
                 <div className="box">
@@ -66,11 +80,22 @@ const ProductPage = () => {
                                     Categories
                                 </span>
                                 <ul className="filter-list">
+                                    <li>
+                                        <Link
+                                            to=""
+                                            onClick={() => setCategory('')}
+                                        >
+                                            All Products
+                                        </Link>
+                                    </li>
                                     {categories.map(category => (
-                                        <li key={category._id}>
-                                            <Link
-                                                to={`/products/${category.name}`}
-                                            >
+                                        <li
+                                            key={category._id}
+                                            onClick={() =>
+                                                setCategory(category.name)
+                                            }
+                                        >
+                                            <Link to={`/products/`}>
                                                 {category.name}
                                             </Link>
                                         </li>
@@ -237,29 +262,30 @@ const ProductPage = () => {
                             <div className="box">
                                 <ul className="pagination">
                                     <li>
-                                        <Link to="">
+                                        <Link to="" onClick={decreaseNavigator}>
                                             <i className="bx bxs-chevron-left"></i>
                                         </Link>
                                     </li>
+                                    {/* {navigator.map((nav, i) => (
+                                        <li
+                                            key={i}
+                                            className={
+                                                navigator.indexOf(nav) === -1 ? 'active' : ''
+
+                                            }
+                                        >
+                                            <Link to="" onClick={() => setNavigator(nav)}>
+                                                {nav}
+                                            </Link>
+                                        </li>
+                                    ))} */}
                                     <li>
                                         <Link to="" className="active">
                                             1
                                         </Link>
                                     </li>
                                     <li>
-                                        <Link to="">2</Link>
-                                    </li>
-                                    <li>
-                                        <Link to="">3</Link>
-                                    </li>
-                                    <li>
-                                        <Link to="">4</Link>
-                                    </li>
-                                    <li>
-                                        <Link to="">5</Link>
-                                    </li>
-                                    <li>
-                                        <Link to="">
+                                        <Link to="" onClick={increaseNavigator}>
                                             <i className="bx bxs-chevron-right"></i>
                                         </Link>
                                     </li>

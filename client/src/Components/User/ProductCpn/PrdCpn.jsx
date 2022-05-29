@@ -13,6 +13,7 @@ import {
     clearErrors,
     getProductDetails
 } from '../../../Redux/Actions/ProductAction'
+import Formatter from '../More/Formatter'
 
 const { Meta } = Card
 
@@ -38,8 +39,8 @@ const PrdCpn = () => {
                 justifyContent: 'center'
             }}
         >
-            {products.map(product => (
-                <div style={{ padding: '0px 10px 20px 10px' }}>
+            {products.map((product, i) => (
+                <div style={{ padding: '0px 10px 20px 10px' }} key={i}>
                     <Link to={`/product/${product._id}`}>
                         <Card
                             hoverable
@@ -59,7 +60,7 @@ const PrdCpn = () => {
                         >
                             <Meta
                                 title={product.name}
-                                description={product.price}
+                                description={Formatter.format(product.price)}
                             />
                         </Card>
                     </Link>

@@ -30,6 +30,9 @@ import {
     UPDATE_PROFILE_FAIL,
     UPDATE_PROFILE_REQUEST,
     UPDATE_PROFILE_SUCCESS,
+    UPDATE_AVATAR_REQUEST,
+    UPDATE_AVATAR_SUCCESS,
+    UPDATE_AVATAR_FAIL,
     UPDATE_USER_FAIL,
     UPDATE_USER_REQUEST,
     UPDATE_USER_SUCCESS,
@@ -120,16 +123,38 @@ export const updateProfile = updateProfileInfo => async dispatch => {
             email: `${updateProfileInfo.email}`,
             name: `${updateProfileInfo.name}`,
             address: `${updateProfileInfo.address}`,
-            phoneNo: `${updateProfileInfo.phoneNo}`,
-            image: `${updateProfileInfo.avatar}`
+            phoneNo: `${updateProfileInfo.phoneNo}`
         })
 
-        console.log('updateProfileInfo.avatar', updateProfileInfo)
+        // console.log('updateProfileInfo.avatar', updateProfileInfo)
 
         dispatch({ type: UPDATE_PROFILE_SUCCESS, payload: data.user })
     } catch (error) {
         dispatch({
             type: UPDATE_PROFILE_FAIL,
+            payload: error.response.data.message
+        })
+    }
+}
+// Update Avatar
+export const updateAvatar = updateProfileInfo => async dispatch => {
+    try {
+        dispatch({ type: UPDATE_AVATAR_REQUEST })
+
+        const config = {
+            headers: { 'Content-Type': 'multipart/form-data' }
+        }
+
+        const { data } = await axios.put(`/api/v1/me/update/avatar`, {
+            image: `${updateProfileInfo.avatar}`
+        })
+
+        // console.log('updateProfileInfo.avatar', updateProfileInfo)
+
+        dispatch({ type: UPDATE_AVATAR_SUCCESS, payload: data.user })
+    } catch (error) {
+        dispatch({
+            type: UPDATE_AVATAR_FAIL,
             payload: error.response.data.message
         })
     }

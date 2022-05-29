@@ -15,6 +15,7 @@ import { useNavigate, Link } from 'react-router-dom'
 
 import {
     updateProfile,
+    updateAvatar,
     updatePassword,
     clearErrors,
     loadUser
@@ -34,6 +35,7 @@ const Profile = () => {
 
     const [open1, setOpen1] = useState(false)
     const [open2, setOpen2] = useState(false)
+    const [open3, setOpen3] = useState(false)
 
     // console.log('profile', user.name)
 
@@ -67,7 +69,7 @@ const Profile = () => {
         }
 
         if (isUpdated) {
-            message.success('Profile Updated Successfully')
+            message.success('Cập nhật thành công')
             dispatch(loadUser())
             navigate('/profile')
 
@@ -77,6 +79,7 @@ const Profile = () => {
             dispatch(clearErrors())
             setOpen1(false)
             setOpen2(false)
+            setOpen3(false)
         }
 
         if (error) {
@@ -85,20 +88,28 @@ const Profile = () => {
         }
     }, [dispatch, error, isUpdated, navigate, user])
 
-    const handleSubmit = e => {
+    const handleSubmitProfile = e => {
         e.preventDefault()
         const updateProfileInfo = {
             name,
             email,
             address,
-            phoneNo,
-            avatar
+            phoneNo
         }
         dispatch(updateProfile(updateProfileInfo))
-        console.log('avatarIN', avatar)
+        // console.log('avatarIN', avatar)
     }
 
-    console.log('avatarOUT', avatar)
+    const handleSubmitAvatar = e => {
+        e.preventDefault()
+        const updateProfileInfo = {
+            avatar
+        }
+        dispatch(updateAvatar(updateProfileInfo))
+        // console.log('avatarIN', avatar)
+    }
+
+    // console.log('avatarOUT', avatar)
 
     const updateProfileDataChange = e => {
         const reader = new FileReader()
@@ -176,6 +187,15 @@ const Profile = () => {
                     </div>
                     <h2 className="profile__username">{user?.name}</h2>
                     <p className="profile__email">{user?.email}</p>
+                    <div className="profile__box__btn">
+                        <button
+                            onClick={() => setOpen3(true)}
+                            type="buttons"
+                            className="btn btn-primary w-60"
+                        >
+                            Cập Nhật Avatar
+                        </button>
+                    </div>
                 </aside>
                 <main className="profile__main">
                     <div>
@@ -253,7 +273,7 @@ const Profile = () => {
                             </div>
 
                             <div className="details-modal-content">
-                                <form onSubmit={handleSubmit}>
+                                <form onSubmit={handleSubmitProfile}>
                                     <div className="form-group">
                                         <label htmlFor="email">Email</label>
                                         <Input
@@ -294,7 +314,7 @@ const Profile = () => {
                                             }
                                         />
                                     </div>
-                                    <div className="form-group">
+                                    {/* <div className="form-group">
                                         <div className="updateProfileImage">
                                             <div className="avatar-preview">
                                                 <img
@@ -317,7 +337,7 @@ const Profile = () => {
                                                 />
                                             </div>
                                         </div>
-                                    </div>
+                                    </div> */}
 
                                     {/* <ImgCrop rotate>
                                         <Upload
@@ -411,6 +431,80 @@ const Profile = () => {
                                     <div className="button-group">
                                         <button
                                             onClick={() => setOpen2(false)}
+                                            className="btn-outline"
+                                            type="button"
+                                        >
+                                            Đóng
+                                        </button>
+                                        <button
+                                            className="btn-primary"
+                                            type="submit"
+                                        >
+                                            Lưu thay đổi
+                                        </button>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    </>
+                )}
+                {open3 && (
+                    <>
+                        <div className="details-modal-overlay"></div>
+                        <div className="details-modal">
+                            <div className="details-modal-title">
+                                <h1>Cập nhật Avatar</h1>
+                                <button
+                                    type="button"
+                                    className="details-modal-close"
+                                    onClick={() => setOpen3(false)}
+                                >
+                                    X
+                                </button>
+                            </div>
+
+                            <div className="details-modal-content">
+                                <form onSubmit={handleSubmitAvatar}>
+                                    <div className="form-group">
+                                        <div className="updateProfileImage">
+                                            <div className="avatar-preview">
+                                                <img
+                                                    src={avatarPreview}
+                                                    alt="Avatar Preview"
+                                                />
+                                            </div>
+                                            <div className="upload-preview">
+                                                <input
+                                                    type="file"
+                                                    name="avatar"
+                                                    accept="image/*"
+                                                    style={{
+                                                        width: '100%',
+                                                        fontSize: '15px'
+                                                    }}
+                                                    onChange={
+                                                        updateProfileDataChange
+                                                    }
+                                                />
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    {/* <ImgCrop rotate>
+                                        <Upload
+                                            action="https://nt-store.herokuapp.com/api/v1/me/update/profile"
+                                            listType="picture-card"
+                                            fileList={fileList}
+                                            onChange={onChange}
+                                            onPreview={onPreview}
+                                        >
+                                            {fileList.length < 1.5 &&
+                                                '+ Upload'}
+                                        </Upload>
+                                    </ImgCrop> */}
+                                    <div className="button-group">
+                                        <button
+                                            onClick={() => setOpen3(false)}
                                             className="btn-outline"
                                             type="button"
                                         >

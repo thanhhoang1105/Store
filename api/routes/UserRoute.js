@@ -8,6 +8,7 @@ const {
     getUserDetails,
     updateUserPassword,
     updateUserProfile,
+    updateUserAvatar,
     getAllUsers,
     getSingleUserDetails,
     updateUserRole,
@@ -31,6 +32,8 @@ router.route('/me').get(isAuthenticatedUser, getUserDetails)
 router.route('/me/update').put(isAuthenticatedUser, updateUserPassword)
 
 router.route('/me/update/profile').put(isAuthenticatedUser, updateUserProfile)
+
+router.route('/me/update/avatar').put(isAuthenticatedUser, updateUserAvatar)
 
 router.get(
     '/admin/users',

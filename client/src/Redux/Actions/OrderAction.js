@@ -6,6 +6,7 @@ import {
     CREATE_ORDER_FAIL,
     CREATE_ORDER_REQUEST,
     CREATE_ORDER_SUCCESS,
+    CREATE_ORDER_RESET,
     DELETE_ORDER_FAIL,
     DELETE_ORDER_REQUEST,
     DELETE_ORDER_SUCCESS,
@@ -34,6 +35,7 @@ export const createOrder = order => async dispatch => {
         const { data } = await axios.post('/api/v1/order/new', order, config)
 
         dispatch({ type: CREATE_ORDER_SUCCESS, payload: data })
+        localStorage.removeItem('cartItems')
     } catch (error) {
         dispatch({
             type: CREATE_ORDER_FAIL,

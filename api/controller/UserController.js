@@ -203,61 +203,50 @@ exports.updateUserPassword = catchAsyncErrors(async (req, res, next) => {
 
 //Update User Profile
 // exports.updateUserProfile = catchAsyncErrors(async (req, res, next) => {
-//     // const { name, email, address, phoneNo, image } = req.body
+// const { name, email, address, phoneNo, image } = req.body
 
-//     // try {
-//     //     const user = await User.findById(req.user.id)
+// try {
+//     const user = await User.findById(req.user.id)
 
-//     //     if (!user) {
-//     //         return next(new ErrorHandler('User not found', 404))
-//     //     }
+//     if (!user) {
+//         return next(new ErrorHandler('User not found', 404))
+//     }
 
-//     //     if (image) {
-//     //         const myCloud = await cloudinary.v2.uploader.upload(image, {
-//     //             folder: 'avatars',
-//     //             width: 150,
-//     //             crop: 'scale'
-//     //         })
+//     if (image) {
+//         const myCloud = await cloudinary.v2.uploader.upload(image, {
+//             folder: 'avatars',
+//             width: 150,
+//             crop: 'scale'
+//         })
 
-//     //         user.avatar.public_id = myCloud.public_id
-//     //         user.avatar.url = myCloud.secure_url
-//     //     }
+//         user.avatar.public_id = myCloud.public_id
+//         user.avatar.url = myCloud.secure_url
+//     }
 
-//     //     user.name = name
-//     //     user.email = email
-//     //     user.address = address
-//     //     user.phoneNo = phoneNo
+//     user.name = name
+//     user.email = email
+//     user.address = address
+//     user.phoneNo = phoneNo
 
-//     //     await user.save()
+//     await user.save()
 
-//     //     console.log(image)
-//     //     console.log('name', name)
+//     console.log(image)
+//     console.log('name', name)
 
-//     //     sendToken(user, 200, res)
-//     // } catch (error) {
-//     //     return next(new ErrorHandler(error.message, 500))
-//     // }
+//     sendToken(user, 200, res)
+// } catch (error) {
+//     return next(new ErrorHandler(error.message, 500))
+// }
 // })
 
 // update User Profile
 exports.updateUserProfile = catchAsyncErrors(async (req, res, next) => {
-    const { name, email, address, phoneNo, image } = req.body
+    const { name, email, address, phoneNo } = req.body
     try {
         const user = await User.findById(req.user.id)
 
         if (!user) {
             return next(new ErrorHandler('User not found', 404))
-        }
-
-        if (image) {
-            const myCloud = await cloudinary.v2.uploader.upload(image, {
-                folder: 'avatars',
-                width: 150,
-                crop: 'scale'
-            })
-
-            user.avatar.public_id = myCloud.public_id
-            user.avatar.url = myCloud.secure_url
         }
 
         user.name = name
@@ -272,6 +261,71 @@ exports.updateUserProfile = catchAsyncErrors(async (req, res, next) => {
         return next(new ErrorHandler(error.message, 500))
     }
 })
+
+// Update User Avatar
+exports.updateUserAvatar = catchAsyncErrors(async (req, res, next) => {
+    const user = await User.findById(req.user.id)
+    const { image } = req.body
+    try {
+        if (!user) {
+            return next(new ErrorHandler('User not found', 404))
+        }
+
+        if (image) {
+            const imageId = user.avatar.public_id
+            await cloudinary.v2.uploader.destroy(imageId)
+
+            const myCloud = await cloudinary.v2.uploader.upload(image, {
+                folder: 'avatars',
+                width: 150,
+                crop: 'scale'
+            })
+
+            user.avatar.public_id = myCloud.public_id
+            user.avatar.url = myCloud.secure_url
+        }
+
+        await user.save()
+
+        sendToken(user, 200, res)
+    } catch (error) {
+        return next(new ErrorHandler(error.message, 500))
+    }
+})
+
+// update User Profile
+// exports.updateUserProfile = catchAsyncErrors(async (req, res, next) => {
+//     const { name, email, address, phoneNo, image } = req.body
+//     try {
+//         const user = await User.findById(req.user.id)
+
+//         if (!user) {
+//             return next(new ErrorHandler('User not found', 404))
+//         }
+
+//         if (image) {
+//             const myCloud = await cloudinary.v2.uploader.upload(image, {
+//                 folder: 'avatars',
+//                 width: 150,
+//                 crop: 'scale'
+//             })
+
+//             user.avatar.public_id = myCloud.public_id
+//             user.avatar.url = myCloud.secure_url
+//         }
+
+//         user.name = name
+//         user.email = email
+//         user.address = address
+//         user.phoneNo = phoneNo
+
+//         await user.save()
+
+//         sendToken(user, 200, res)
+//     } catch (error) {
+//         return next(new ErrorHandler(error.message, 500))
+//     }
+// })
 
 //Get All Users --> Admin
 exports.getAllUsers = catchAsyncErrors(async (req, res, next) => {

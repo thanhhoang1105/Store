@@ -5,6 +5,7 @@ import {
     CLEAR_ERRORS,
     CREATE_ORDER_FAIL,
     CREATE_ORDER_REQUEST,
+    CREATE_ORDER_RESET,
     CREATE_ORDER_SUCCESS,
     DELETE_ORDER_FAIL,
     DELETE_ORDER_REQUEST,
@@ -32,14 +33,21 @@ export const newOrderReducer = (state = {}, action) => {
 
         case CREATE_ORDER_SUCCESS:
             return {
+                ...state,
                 loading: false,
-                order: action.payload
+                orderItem: action.payload
             }
 
         case CREATE_ORDER_FAIL:
             return {
+                ...state,
                 loading: false,
                 error: action.payload
+            }
+        case CREATE_ORDER_RESET:
+            return {
+                ...state,
+                orderItem: false
             }
         case CLEAR_ERRORS:
             return {
@@ -99,6 +107,7 @@ export const orderDetailsReducer = (state = { order: {} }, action) => {
                 loading: false,
                 error: action.payload
             }
+
         case CLEAR_ERRORS:
             return {
                 ...state,

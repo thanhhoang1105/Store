@@ -49,6 +49,7 @@ export const getProduct =
                 type: ALL_PRODUCT_SUCCESS,
                 payload: data
             })
+            // console.log('All Products', data.totalPages)
         } catch (error) {
             dispatch({
                 type: ALL_PRODUCT_FAIL,

@@ -6,22 +6,45 @@ const catchAsyncErrors = require('../middleware/catchAsyncErrors')
 //get All Products
 exports.getAllProducts = async (req, res) => {
     const resultPerPage = 8
+    const count = await Product.countDocuments()
 
-    const productCount = await Product.find().countDocuments()
+    const page = req.query.page || 1
 
     const feature = new Features(Product.find(), req.query)
         .search()
         .filter()
         .pagination(resultPerPage)
-    // const products = await Product.find()
+
     const products = await feature.query
 
+    // const products = await Product.find()
+    //     .skip(resultPerPage * page - resultPerPage)
+    //     .limit(resultPerPage)
+    //     .sort({ createdAt: -1 })
+
     res.status(200).json({
-        success: true,
+        status: 'success',
         products,
-        resultPerPage
+        currentPage: page,
+        totalPages: Math.ceil(count / resultPerPage)
     })
 }
+
+//     const productCount = await Product.find().countDocuments()
+
+//     const feature = new Features(Product.find(), req.query)
+//         .search()
+//         .filter()
+//         .pagination(resultPerPage)
+//     // const products = await Product.find()
+//     const products = await feature.query
+
+//     res.status(200).json({
+//         success: true,
+//         products,
+//         resultPerPage
+//     })
+// }
 
 //create Product --> Admin
 exports.createProduct = catchAsyncErrors(async (req, res, next) => {

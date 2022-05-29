@@ -3,7 +3,7 @@ import PrdCpn from './PrdCpn'
 
 const Product = () => {
     return (
-        <div classNameName="products">
+        <div className="products">
             <div className="section">
                 <div className="container">
                     <div className="section-header">

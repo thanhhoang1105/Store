@@ -1,15 +1,28 @@
-import React from 'react'
+import React, { useState, useEffect } from 'react'
 import { Link } from 'react-router-dom'
 import { useDispatch, useSelector } from 'react-redux'
 import { message } from 'antd'
 
 import { logout } from '../../../Redux/Actions/UserAction'
+import { clearErrors, getProduct } from '../../../Redux/Actions/ProductAction'
 
 const Header = () => {
     const dispatch = useDispatch()
 
     const { user } = useSelector(state => state.user)
     // const { loading, error, user } = user
+    const { products, error, loading } = useSelector(state => state.products)
+
+    const [keyword, setKeyword] = useState('')
+
+    // console.log('keyword', keyword)
+    useEffect(() => {
+        if (error) {
+            message.error(error)
+            dispatch(clearErrors())
+        }
+        dispatch(getProduct(keyword))
+    }, [dispatch, keyword, error])
 
     const handleLogout = () => {
         dispatch(logout())
@@ -19,7 +32,7 @@ const Header = () => {
     // console.log('user', user?.name)
 
     return (
-        <div classNameName="header">
+        <div className="header">
             <header>
                 {/* mobile menu */}
                 <div className="mobile-menu bg-second">
@@ -70,7 +83,7 @@ const Header = () => {
                                     </ul>
                                 </li>
                                 <li>
-                                    <Link to="/">ORDER TRACKING</Link>
+                                    <Link to="/orders">ORDER TRACKING</Link>
                                 </li>
                             </ul>
                         </div>
@@ -87,6 +100,7 @@ const Header = () => {
                                     type="text"
                                     placeholder="Search"
                                     className="search-input"
+                                    onChange={e => setKeyword(e.target.value)}
                                 />
                                 <i className="bx bx-search-alt"></i>
                             </div>
@@ -97,7 +111,7 @@ const Header = () => {
                                     </Link>
                                 </li>
                                 <li>
-                                    <Link to="/">
+                                    <Link to="/cart">
                                         <i className="bx bx-cart"></i>
                                     </Link>
                                 </li>
