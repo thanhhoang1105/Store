@@ -4,7 +4,8 @@ import { Space, Table, Tag } from 'antd'
 import { Link } from 'react-router-dom'
 import { FaTrash, FaEye, FaPen } from 'react-icons/fa'
 
-import { getAllUsers } from '../../../Redux/Actions/UserAction'
+// import { getAllUsers } from '../../../Redux/Actions/UserAction'
+import './style.css'
 
 const { Column, ColumnGroup } = Table
 
@@ -13,9 +14,9 @@ const UserAdminPage = () => {
 
     const { users, loading, error } = useSelector(state => state.allUsers)
 
-    useEffect(() => {
-        dispatch(getAllUsers())
-    })
+    // useEffect(() => {
+    //     dispatch(getAllUsers())
+    // })
 
     console.log('users', users)
 

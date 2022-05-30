@@ -39,7 +39,7 @@ const PrdCpn = () => {
                 justifyContent: 'center'
             }}
         >
-            {products.map((product, i) => (
+            {products.reverse().map((product, i) => (
                 <div style={{ padding: '0px 10px 20px 10px' }} key={i}>
                     <Link to={`/product/${product._id}`}>
                         <Card

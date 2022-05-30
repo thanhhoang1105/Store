@@ -105,7 +105,7 @@ export const newReview = reviewData => async dispatch => {
 }
 
 // Create Product --------Admin
-export const createProduct = productData => async dispatch => {
+export const createProduct = updateProductInfo => async dispatch => {
     try {
         dispatch({ type: NEW_PRODUCT_REQUEST })
 
@@ -114,8 +114,8 @@ export const createProduct = productData => async dispatch => {
         }
 
         const { data } = await axios.post(
-            `/api/v1/product/new`,
-            productData,
+            `/api/v1/admin/product/new`,
+            updateProductInfo,
             config
         )
 
@@ -155,7 +155,7 @@ export const deleteProduct = id => async dispatch => {
     try {
         dispatch({ type: DELETE_PRODUCT_REQUEST })
 
-        const { data } = await axios.delete(`/api/v1/product/${id}`)
+        const { data } = await axios.delete(`/api/v1/admin/product/${id}`)
 
         dispatch({
             type: DELETE_PRODUCT_SUCCESS,
@@ -179,7 +179,7 @@ export const updateProduct = (id, productData) => async dispatch => {
         }
 
         const { data } = await axios.put(
-            `/api/v1/product/${id}`,
+            `/api/v1/admin/product/${id}`,
             productData,
             config
         )

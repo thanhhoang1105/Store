@@ -5,7 +5,7 @@ import { Link } from 'react-router-dom'
 import { FaTrash, FaEye, FaPen } from 'react-icons/fa'
 
 import { getAllOrders } from '../../../Redux/Actions/OrderAction'
-
+import './style.css'
 const { Column, ColumnGroup } = Table
 
 const OrderAdminPage = () => {

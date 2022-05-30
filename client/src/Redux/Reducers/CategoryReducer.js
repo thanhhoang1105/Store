@@ -8,8 +8,10 @@ import {
     NEW_CATEGORY_REQUEST,
     NEW_CATEGORY_SUCCESS,
     NEW_CATEGORY_FAIL,
+    NEW_CATEGORY_RESET,
     DELETE_CATEGORY_REQUEST,
     DELETE_CATEGORY_SUCCESS,
+    DELETE_CATEGORY_RESET,
     DELETE_CATEGORY_FAIL
 } from '../Constants/CategoryConstants'
 
@@ -50,6 +52,7 @@ export const newCategoryReducer = (state = { newCategory: [] }, action) => {
             return {
                 ...state,
                 loading: false,
+                success: true,
                 newCategory: action.payload
             }
         case NEW_CATEGORY_FAIL:
@@ -57,6 +60,11 @@ export const newCategoryReducer = (state = { newCategory: [] }, action) => {
                 ...state,
                 loading: false,
                 error: action.payload
+            }
+        case NEW_CATEGORY_RESET:
+            return {
+                ...state,
+                success: false
             }
         default:
             return state
@@ -113,6 +121,11 @@ export const deleteCategoryReducer = (
                 ...state,
                 loading: false,
                 error: action.payload
+            }
+        case DELETE_CATEGORY_RESET:
+            return {
+                ...state,
+                deleteCategory: false
             }
         default:
             return state

@@ -42,7 +42,7 @@ export const updateCategory = (id, data) => async dispatch => {
         })
 
         const { data: response } = await axios.put(
-            `/api/v1/category/${id}`,
+            `/api/v1/admin/category/${id}`,
             data
         )
 
@@ -59,13 +59,18 @@ export const updateCategory = (id, data) => async dispatch => {
 }
 
 //create category
-export const newCategory = data => async dispatch => {
+export const newCategory = categoryInfo => async dispatch => {
     try {
         dispatch({
             type: NEW_CATEGORY_REQUEST
         })
 
-        const { data: response } = await axios.post('/api/v1/category', data)
+        const { data: response } = await axios.post(
+            '/api/v1/admin/category',
+            categoryInfo
+        )
+
+        console.log('data', categoryInfo)
 
         dispatch({
             type: NEW_CATEGORY_SUCCESS,
@@ -86,7 +91,7 @@ export const deleteCategory = id => async dispatch => {
             type: DELETE_CATEGORY_REQUEST
         })
 
-        const { data } = await axios.delete(`/api/v1/category/${id}`)
+        const { data } = await axios.delete(`/api/v1/admin/category/${id}`)
 
         dispatch({
             type: DELETE_CATEGORY_SUCCESS,

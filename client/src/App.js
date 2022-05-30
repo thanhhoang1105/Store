@@ -4,9 +4,10 @@ import WebFont from 'webfontloader'
 
 import './App.css'
 import { useSelector } from 'react-redux'
-import { loadUser } from './Redux/Actions/UserAction'
+import { loadUser, getAllUsers } from './Redux/Actions/UserAction'
 import { getCategories } from './Redux/Actions/CategoryAction'
 import { myOrders, getAllOrders } from './Redux/Actions/OrderAction'
+import { getProduct } from './Redux/Actions/ProductAction'
 import store from './Redux/store'
 
 import LayoutUser from './Layout/LayoutUser'
@@ -29,6 +30,7 @@ import ProductAdminPage from './Pages/Admin/Products/ProductAdminPage'
 import CategoryAdminPage from './Pages/Admin/Categories/CategoryAdminPage'
 import ReviewAdminPage from './Pages/Admin/Reviews/ReviewAdminPage'
 import SlideAdminPage from './Pages/Admin/Slide/SlideAdminPage'
+import EditProduct from './Pages/Admin/Products/EditProduct'
 
 function App() {
     window.scrollTo({ top: 0 })
@@ -45,6 +47,8 @@ function App() {
         store.dispatch(getCategories())
         store.dispatch(myOrders())
         store.dispatch(getAllOrders())
+        store.dispatch(getAllUsers())
+        store.dispatch(getProduct())
     }, [])
 
     return (
@@ -66,6 +70,10 @@ function App() {
                 <Route path="/admin/orders" element={<OrderAdminPage />} />
                 <Route path="/admin/users" element={<UserAdminPage />} />
                 <Route path="/admin/products" element={<ProductAdminPage />} />
+                <Route
+                    path="/admin/products/edit/:id"
+                    element={<EditProduct />}
+                />
                 <Route
                     path="/admin/categories"
                     element={<CategoryAdminPage />}

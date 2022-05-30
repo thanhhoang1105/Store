@@ -61,10 +61,10 @@
     flex-direction: row-reverse;
 }
 
-[class*='col-'] {
+/* [class*='col-'] {
     padding: 0 15px;
     margin-bottom: 20px;
-}
+} */
 
 .col-1 {
     width: 8.33%;
@@ -90,9 +90,9 @@
     width: 41.66%;
 }
 
-.col-6 {
+/* .col-6 {
     width: 50%;
-}
+} */
 
 .col-7 {
     width: 58.33%;

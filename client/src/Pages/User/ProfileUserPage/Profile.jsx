@@ -137,35 +137,6 @@ const Profile = () => {
         e.preventDefault()
         dispatch(updatePassword(updatePasswordInfo))
     }
-    // console.log('userProfile', user.avatar.url)
-
-    // const [fileList, setFileList] = useState([
-    //     {
-    //         uid: '-1',
-    //         name: 'image.png',
-    //         status: 'done',
-    //         url: user?.avatar?.url
-    //     }
-    // ])
-
-    // const onChange = ({ fileList: newFileList }) => {
-    //     setFileList(newFileList)
-    // }
-
-    // const onPreview = async file => {
-    //     let src = file.url
-    //     if (!src) {
-    //         src = await new Promise(resolve => {
-    //             const reader = new FileReader()
-    //             reader.readAsDataURL(file.originFileObj)
-    //             reader.onload = () => resolve(reader.result)
-    //         })
-    //     }
-    //     const image = new Image()
-    //     image.src = src
-    //     const imgWindow = window.open(src)
-    //     imgWindow?.document.write(image.outerHTML)
-    // }
 
     return (
         <>
@@ -314,43 +285,6 @@ const Profile = () => {
                                             }
                                         />
                                     </div>
-                                    {/* <div className="form-group">
-                                        <div className="updateProfileImage">
-                                            <div className="avatar-preview">
-                                                <img
-                                                    src={avatarPreview}
-                                                    alt="Avatar Preview"
-                                                />
-                                            </div>
-                                            <div className="upload-preview">
-                                                <input
-                                                    type="file"
-                                                    name="avatar"
-                                                    accept="image/*"
-                                                    style={{
-                                                        width: '100%',
-                                                        fontSize: '15px'
-                                                    }}
-                                                    onChange={
-                                                        updateProfileDataChange
-                                                    }
-                                                />
-                                            </div>
-                                        </div>
-                                    </div> */}
-
-                                    {/* <ImgCrop rotate>
-                                        <Upload
-                                            action="https://nt-store.herokuapp.com/api/v1/me/update/profile"
-                                            listType="picture-card"
-                                            fileList={fileList}
-                                            onChange={onChange}
-                                            onPreview={onPreview}
-                                        >
-                                            {fileList.length < 1.5 &&
-                                                '+ Upload'}
-                                        </Upload>
-                                    </ImgCrop> */}
                                     <div className="button-group">
                                         <button
                                             onClick={() => setOpen1(false)}

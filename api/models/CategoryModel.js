@@ -6,6 +6,10 @@ const categorySchema = new mongoose.Schema({
         required: [true, 'Please add a name for your category']
     },
     slug: String,
+    description: {
+        type: String,
+        required: [true, 'Please add a description for your category']
+    },
     createAt: {
         type: Date,
         default: Date.now()

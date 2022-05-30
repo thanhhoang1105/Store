@@ -1,11 +1,10 @@
 import React from 'react'
+import ProductCpn from '../../../Components/Admin/ProductsCpn/ProductCpn'
+
+import './style.css'
 
 const ProductAdminPage = () => {
-    return (
-        <div>
-            <h1>ProductAdminPage</h1>
-        </div>
-    )
+    return <ProductCpn />
 }
 
 export default ProductAdminPage

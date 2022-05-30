@@ -280,7 +280,7 @@ const ProductPage = () => {
                                         </li>
                                     ))} */}
                                     <li>
-                                        <Link to="" className="active">
+                                        <Link to="" className="active_nav">
                                             1
                                         </Link>
                                     </li>
